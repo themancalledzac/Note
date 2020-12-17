@@ -12,7 +12,7 @@ app.use(express.static('public'));
 app.use(express.static('routes'));
 
 
-// require("./routes/apiRoutes")(app);
+require("./routes/htmlRoutes")(app);
 
 
 app.listen( PORT );
