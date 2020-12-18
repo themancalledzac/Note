@@ -1,18 +1,27 @@
 // load data
-var noteData = require("../data/noteData");
+const noteData = "../data/db.json";
 
 
 // routing
 
 module.exports = function(app) {
 
-    app.get("/api/notes", function(req, res) {
-        res.json(noteData);
-    });
+    app.get('/api/notes', function(req, res) {
+        false.readFile()
+    })
 
     app.post("/api/notes", function(req, res) {
-        noteData.push(req.body);
+        
+        let newNote = req.body;
+        noteData.push(newNote);
         res.json(true);
+
+    });
+
+    app.post("/api/clear", function(req, res) {
+        noteData.length = 0;
+
+        res.json({ ok: true });
     });
 
 
