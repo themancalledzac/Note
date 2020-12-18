@@ -4,7 +4,7 @@ const path = require("path");
 const app = express();
 const PORT = process.env.PORT || 3002;
 
-const notesData = require('./data/db.json');
+// const notesData = require('./data/db.json');
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
