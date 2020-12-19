@@ -11,11 +11,12 @@ app.use(express.json());
 
 // this should be able to load all files in that directory? or will i need to do it for each folder within?
 app.use(express.static('public'));
-app.use(express.static('routes'));
+// app.use(express.static('routes'));
 
 
-require("./routes/htmlRoutes")(app);
 require("./routes/apiRoutes")(app);
+// go second to remove the * fropm hitting first
+require("./routes/htmlRoutes")(app);
 // require("./data/db.json")(app);
 
 
