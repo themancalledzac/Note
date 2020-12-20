@@ -4,7 +4,7 @@ const notes = require("../db/db.json");
 const path = require("path");
 const dbURL = path.resolve(__dirname, "../db/db.json");
 const { v4: uuidv4 } =require('uuid');
-// uuidv4();
+uuidv4();
 
 // routing
 module.exports = function(app) {
@@ -22,14 +22,15 @@ module.exports = function(app) {
     app.post("/api/notes", function(req, res) {
         
         const newNote = req.body;
-        const randomId = new uuidv4();
+        const randomId = uuidv4();
+        console.log(randomId);
         // console.log(newNote);
         // const note = JSON.parse(notes);
 
         fs.readFile(dbURL, 'utf8', (err, data) => {
             if (err) throw err;
             let note = JSON.parse(data);
-            newNote.id = randomId
+            newNote.id = randomId;
             note.push(newNote);
             // console.log(note);
 
@@ -48,21 +49,36 @@ module.exports = function(app) {
 
     // app.delete("/api/notes/:id", (req, res) => {
 
-    //     if(req.query.uniqueID)
+    //     const id = req.params.id;
+    //     let notes = [];
     //     //read
-    //     // get copy
+    //     notes = readFile();
+    //     console.log(notes);
     //     // loop through, get id
-    //     // delete
+    //     notes = notes.filter(({id}) => id != checkId);
+
     //     // resave fs.save
+    //     fs.writeFile(notes);
     //     // send back
-
+    //     return res.json(true)
     // });
+   
 
-    // app.post("/api/clear", function(req, res) {
-    //     notes.length = 0;
+};
 
-    //     res.json({ ok: true });
-    // });
+readFile = (notes) => {
+    notes = fs.readFile(dbURL, 'utf8', (err, data) => {
+        if (err) throw err;
+        notes.push(newNote);
+    });
+    return
+};
 
-
+writeFile = (notes) => {
+    fs.writeFile(dbURL, (updatedArray), (err) => {
+        if (err) throw err;
+        else {
+            return res.json(updatedArray);
+        };
+    });
 };
