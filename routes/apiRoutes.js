@@ -3,12 +3,11 @@ const fs = require('fs');
 const notes = require("../db/db.json");
 const path = require("path");
 const dbURL = path.resolve(__dirname, "../db/db.json");
-const randomID =  
-// console.log(dbURL);
+const { v4: uuidv4 } =require('uuid');
+// uuidv4();
+
 // routing
-
 module.exports = function(app) {
-
 
     app.get('/api/notes', function(req, res) {
         // console.log(notes);
@@ -23,13 +22,14 @@ module.exports = function(app) {
     app.post("/api/notes", function(req, res) {
         
         const newNote = req.body;
-        newNote.id = randomID;
+        const randomId = new uuidv4();
         // console.log(newNote);
         // const note = JSON.parse(notes);
 
         fs.readFile(dbURL, 'utf8', (err, data) => {
             if (err) throw err;
             let note = JSON.parse(data);
+            newNote.id = randomId
             note.push(newNote);
             // console.log(note);
 
@@ -46,8 +46,9 @@ module.exports = function(app) {
         });
     });
 
-    // app.delete("/api/notes/:noteId", (req, res) {
+    // app.delete("/api/notes/:id", (req, res) => {
 
+    //     if(req.query.uniqueID)
     //     //read
     //     // get copy
     //     // loop through, get id
