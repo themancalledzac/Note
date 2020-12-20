@@ -78,6 +78,11 @@ module.exports = function(app) {
     });
 };
 
+
+// =============================================================
+// Someday will try and split these up into ddifferent functions
+// =============================================================
+
 // readFile = (notes) => {
 //     notes = fs.readFile(dbURL, 'utf8', (err, data) => {
 //         if (err) throw err;
