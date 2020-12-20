@@ -47,38 +47,52 @@ module.exports = function(app) {
         });
     });
 
-    // app.delete("/api/notes/:id", (req, res) => {
+    
+    
+    app.delete("/api/notes/:id", (req, res) => {
 
-    //     const id = req.params.id;
-    //     let notes = [];
-    //     //read
-    //     notes = readFile();
-    //     console.log(notes);
-    //     // loop through, get id
-    //     notes = notes.filter(({id}) => id != checkId);
-
-    //     // resave fs.save
-    //     fs.writeFile(notes);
-    //     // send back
-    //     return res.json(true)
-    // });
-   
-
-};
-
-readFile = (notes) => {
-    notes = fs.readFile(dbURL, 'utf8', (err, data) => {
-        if (err) throw err;
-        notes.push(newNote);
-    });
-    return
-};
-
-writeFile = (notes) => {
-    fs.writeFile(dbURL, (updatedArray), (err) => {
-        if (err) throw err;
-        else {
-            return res.json(updatedArray);
+        const checkId = req.params.id;
+        //read
+        var note = [];
+        
+        readFile = (notes) => {
+            notes = fs.readFile(dbURL, 'utf8', (err, data) => {
+                if (err) throw err;
+                notes.push(newNote);
+            });
+            return
         };
+        // loop through, get id
+        note = notes.filter(({id}) => id != checkId);
+        console.log(note);
+
+        // resave fs.save
+
+        fs.writeFile(dbURL, (JSON.stringify(note)), (err) => {
+            if (err) throw err;
+            else {
+                return res.json(note);
+            };
+        });
+
+        // send back
+        return res.json(true)
     });
 };
+
+// readFile = (notes) => {
+//     notes = fs.readFile(dbURL, 'utf8', (err, data) => {
+//         if (err) throw err;
+//         notes.push(newNote);
+//     });
+//     return
+// };
+
+// writeFile = (notes) => {
+//     fs.writeFile(dbURL, (updatedArray), (err) => {
+//         if (err) throw err;
+//         else {
+//             return res.json(updatedArray);
+//         };
+//     });
+// };
