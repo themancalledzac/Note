@@ -50,31 +50,18 @@ module.exports = function(app) {
     app.delete("/api/notes/:id", (req, res) => {
 
         const checkId = req.params.id;
-        //read
-        var note = [];
-        
-        readFile = (notes) => {
-            notes = fs.readFile(dbURL, 'utf8', (err, data) => {
+        fs.readFile(dbURL, 'utf8', (err, data) => {
+            if(err) throw err;
+            const note = JSON.parse(data);
+            console.log(note);
+            const notes = note.filter(({id}) => id != checkId);
+            
+            let updatedArray = JSON.stringify(notes);
+            fs.writeFile(dbURL, (updatedArray), (err) => {
                 if (err) throw err;
-                notes.push(newNote);
+                return res.json(true)
             });
-            return
-        };
-        // loop through, get id
-        note = notes.filter(({id}) => id != checkId);
-        console.log(note);
-        let updatedArray = JSON.stringify(note);
-        // resave fs.save
-
-        fs.writeFile(dbURL, (updatedArray), (err) => {
-            if (err) throw err;
-            else {
-                return res.json(note);
-            };
         });
-
-        // send back
-        return res.json(true)
     });
 };
 
