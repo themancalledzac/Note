@@ -22,18 +22,14 @@ module.exports = function(app) {
         
         const newNote = req.body;
         const randomId = uuidv4();
-        console.log(randomId);
-
 
         fs.readFile(dbURL, 'utf8', (err, data) => {
             if (err) throw err;
-            let note = JSON.parse(data);
+            const note = JSON.parse(data);
             newNote.id = randomId;
             note.push(newNote);
-            // console.log(note);
 
             let updatedArray = JSON.stringify(note);
-            // console.log(updatedArray);
 
             fs.writeFile(dbURL, (updatedArray), (err) => {
                 if (err) throw err;
@@ -44,12 +40,11 @@ module.exports = function(app) {
             });
         });
     });
-
-    
-    
+  
     app.delete("/api/notes/:id", (req, res) => {
 
         const checkId = req.params.id;
+        
         fs.readFile(dbURL, 'utf8', (err, data) => {
             if(err) throw err;
             const note = JSON.parse(data);
